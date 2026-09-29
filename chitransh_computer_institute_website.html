@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chitransh Computer Institute & Spoken English | Indore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#070F2B',
+                            800: '#1B1A55',
+                            700: '#535C91',
+                        },
+                        brandBlue: '#0052FF',
+                        brandRed: '#FF3366',
+                        brandDark: '#0B132B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Three.js for 3D elements -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #070F2B; color: #F3F4F6; overflow-x: hidden; }
+        .glass-card {
+            background: rgba(27, 26, 85, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 82, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 82, 255, 0.15);
+        }
+        .glass-nav {
+            background: rgba(7, 15, 43, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .card-3d {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+        }
+        .card-3d:hover {
+            transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070F2B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1B1A55;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0052FF;
+        }
+    </style>
+</head>
+<body class="bg-[#070F2B] text-gray-100 antialiased selection:bg-brandBlue selection:text-white">
+
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-12 h-12 rounded-full bg-white/10 p-0.5 border border-blue-500/30 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                    <img src="WhatsApp Image 2026-09-29 at 7.08.36 PM.jpeg" alt="Chitransh Computer Institute Logo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/100x100/1B1A55/FFFFFF?text=CCI'">
+                </div>
+                <div>
+                    <span class="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-white via-blue-200 to-brandBlue bg-clip-text text-transparent">CHITRANSH</span>
+                    <span class="block text-[10px] tracking-widest text-blue-400 font-semibold uppercase">Computer Institute & Spoken English</span>
+                </div>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#home" class="hover:text-brandBlue transition-colors">Home</a>
+                <a href="#about" class="hover:text-brandBlue transition-colors">About</a>
+                <a href="#courses" class="hover:text-brandBlue transition-colors">Courses</a>
+                <a href="#why-us" class="hover:text-brandBlue transition-colors">Why Us</a>
+                <a href="#contact" class="hover:text-brandBlue transition-colors">Contact</a>
+            </div>
+
+            <div class="hidden lg:flex items-center space-x-4">
+                <a href="tel:7389832379" class="flex items-center space-x-2 text-sm bg-navy-800/80 px-4 py-2.5 rounded-xl border border-blue-500/20 hover:border-brandBlue transition-colors">
+                    <i data-lucide="phone-call" class="w-4 h-4 text-brandBlue"></i>
+                    <span>+91 73898 32379</span>
+                </a>
+                <button onclick="openAdmissionModal()" class="bg-gradient-to-r from-brandBlue to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-brandBlue/30 hover:scale-105 transition-all">
+                    Apply Now
+                </button>
+            </div>
+
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-navy-800/80 text-gray-300 hover:text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-card border-t border-white/10 px-6 py-6 space-y-4">
+            <a href="#home" onclick="toggleMobileMenu()" class="block text-lg font-medium hover:text-brandBlue">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-lg font-medium hover:text-brandBlue">About</a>
+            <a href="#courses" onclick="toggleMobileMenu()" class="block text-lg font-medium hover:text-brandBlue">Courses</a>
+            <a href="#why-us" onclick="toggleMobileMenu()" class="block text-lg font-medium hover:text-brandBlue">Why Us</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-lg font-medium hover:text-brandBlue">Contact</a>
+            <div class="pt-4 flex flex-col space-y-3">
+                <a href="tel:7389832379" class="flex items-center justify-center space-x-2 bg-navy-800 py-3 rounded-xl border border-blue-500/20">
+                    <i data-lucide="phone-call" class="w-4 h-4 text-brandBlue"></i>
+                    <span>Call: +91 73898 32379</span>
+                </a>
+                <a href="tel:9343680408" class="flex items-center justify-center space-x-2 bg-navy-800 py-3 rounded-xl border border-blue-500/20">
+                    <i data-lucide="phone-call" class="w-4 h-4 text-brandRed"></i>
+                    <span>Call: +91 93436 80408</span>
+                </a>
+                <button onclick="openAdmissionModal(); toggleMobileMenu();" class="w-full bg-brandBlue py-3 rounded-xl font-semibold shadow-lg shadow-brandBlue/30">
+                    Apply Now
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden">
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-brandBlue/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-brandRed/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm font-medium">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-brandRed"></i>
+                        <span>Indore's Premier Computer & Spoken English Institute</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
+                        Learn Today. <br>
+                        <span class="bg-gradient-to-r from-brandBlue via-blue-400 to-indigo-300 bg-clip-text text-transparent">Practice Today.</span> <br>
+                        Build Your Future.
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 font-normal">
+                        Computer Courses, Programming, Spoken English & Career-Focused Training at Chitransh Computer Institute.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#courses" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brandBlue to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-lg shadow-xl shadow-brandBlue/30 hover:scale-105 transition-all text-center">
+                            Explore Courses
+                        </a>
+                        <button onclick="openAdmissionModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card hover:bg-white/10 text-white font-bold text-lg border border-white/20 transition-all text-center">
+                            Apply for Admission
+                        </button>
+                    </div>
+
+                    <!-- Badges -->
+                    <div class="pt-4 border-t border-white/10 flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-6 text-sm text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-5 h-5 rounded-full bg-brandBlue/20 text-brandBlue flex items-center justify-center text-xs font-bold">✓</span>
+                            <span>Practical Learning</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-5 h-5 rounded-full bg-brandBlue/20 text-brandBlue flex items-center justify-center text-xs font-bold">✓</span>
+                            <span>Expert Trainers</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-5 h-5 rounded-full bg-brandBlue/20 text-brandBlue flex items-center justify-center text-xs font-bold">✓</span>
+                            <span>Hands-on Projects</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-5 h-5 rounded-full bg-brandBlue/20 text-brandBlue flex items-center justify-center text-xs font-bold">✓</span>
+                            <span>Certificate & Placement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Interactive Canvas Container -->
+                <div class="lg:col-span-5 relative flex items-center justify-center">
+                    <div class="w-full h-[400px] sm:h-[480px] rounded-3xl glass-card overflow-hidden relative flex items-center justify-center border border-white/10 shadow-2xl">
+                        <div id="hero3dCanvasContainer" class="absolute inset-0 w-full h-full"></div>
+                        
+                        <div class="absolute bottom-6 left-6 right-6 glass-card p-4 rounded-2xl flex items-center space-x-4 border border-white/15 backdrop-blur-xl">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-brandRed to-brandBlue flex items-center justify-center text-white font-black text-xl shadow-md">
+                                <i data-lucide="code" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Next Batch Starts Soon</h4>
+                                <p class="text-xs text-blue-300">Enroll now for DCA, ADCA, Python & Spoken English</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 relative bg-navy-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-brandBlue font-bold tracking-widest uppercase text-sm">About Chitransh Institute</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Empowering Your Tech & Career Journey</h2>
+                <p class="text-gray-300 text-base sm:text-lg">
+                    "Chitransh Computer Institute & Spoken English provides practical computer education, programming courses, spoken English training and career-oriented skill development."
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-3xl card-3d border border-white/10 space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-brandBlue/20 text-brandBlue flex items-center justify-center">
+                        <i data-lucide="laptop" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Practical Training</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        100% lab-based practical sessions ensuring students gain real-world confidence in computer operations and software tools.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl card-3d border border-white/10 space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-brandRed/20 text-brandRed flex items-center justify-center">
+                        <i data-lucide="layers" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Beginner to Advanced</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Structured curricula designed for absolute beginners as well as advanced learners aiming for professional IT roles.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl card-3d border border-white/10 space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="check-circle" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Project-Based Learning</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Work on live coding projects, web apps, tally accounting assignments, and practical assignments.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl card-3d border border-white/10 space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center">
+                        <i data-lucide="award" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Certificate on Completion</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Recognized certification awarded upon successful course completion to boost your resume and job prospects.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl card-3d border border-white/10 space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-yellow-500/20 text-yellow-400 flex items-center justify-center">
+                        <i data-lucide="message-square" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Confidence Building</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Specialized Spoken English training program tailored to enhance communication, fluency, and personality.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 rounded-3xl card-3d border border-white/10 space-y-4">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="briefcase" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Career-Oriented Skills</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Placement guidance, interview preparation, and skill-sets demanded by top employers in Indore and beyond.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-12">
+                <span class="text-brandBlue font-bold tracking-widest uppercase text-sm">Comprehensive Programs</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Explore Our Courses</h2>
+                <p class="text-gray-300 text-base sm:text-lg">
+                    Choose from our wide range of professional computer diplomas, programming languages, short courses, and spoken English training.
+                </p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterCourses('all')" class="category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all bg-brandBlue text-white shadow-lg shadow-brandBlue/30" data-category="all">All Courses</button>
+                <button onclick="filterCourses('computer')" class="category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all glass-card hover:bg-white/10 text-gray-300" data-category="computer">Computer Diplomas</button>
+                <button onclick="filterCourses('programming')" class="category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all glass-card hover:bg-white/10 text-gray-300" data-category="programming">Programming Languages</button>
+                <button onclick="filterCourses('spoken')" class="category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all glass-card hover:bg-white/10 text-gray-300" data-category="spoken">Spoken English</button>
+                <button onclick="filterCourses('short')" class="category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all glass-card hover:bg-white/10 text-gray-300" data-category="short">Short Courses & Typing</button>
+            </div>
+
+            <!-- Courses Grid -->
+            <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="py-24 relative bg-navy-900/60 border-y border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <span class="text-brandBlue font-bold tracking-widest uppercase text-sm">Excellence in Education</span>
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Why Students Choose Chitransh</h2>
+                <p class="text-gray-300 text-base sm:text-lg">
+                    Discover what makes us the trusted destination for computer education in Indore.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-2xl flex items-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0 font-bold">✓</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Practical Learning</h4>
+                        <p class="text-gray-400 text-sm mt-1">Hands-on practice on modern computers with expert supervision.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0 font-bold">✓</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Expert Trainers</h4>
+                        <p class="text-gray-400 text-sm mt-1">Experienced faculty dedicated to individual student progress.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0 font-bold">✓</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Beginner to Advanced</h4>
+                        <p class="text-gray-400 text-sm mt-1">Curriculum built for all skill levels from scratch to mastery.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0 font-bold">✓</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Hands-on Projects</h4>
+                        <p class="text-gray-400 text-sm mt-1">Build real software, websites, and accounting sheets.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0 font-bold">✓</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Certificate</h4>
+                        <p class="text-gray-400 text-sm mt-1">Valuable completion certificate recognized by employers.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex items-start space-x-4">
+                    <div class="w-10 h-10 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0 font-bold">✓</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Placement Support</h4>
+                        <p class="text-gray-400 text-sm mt-1">Guidance and interview preparation for jobs and internships.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="text-brandBlue font-bold tracking-widest uppercase text-sm">Get In Touch</span>
+                    <h2 class="text-3xl sm:text-5xl font-black tracking-tight">Visit Our Institute in Indore</h2>
+                    <p class="text-gray-300 text-base leading-relaxed">
+                        Have questions about courses, fees, or batch timings? Drop by our center at Kumawat Plaza, Robot Square or contact us directly via phone or WhatsApp.
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-start space-x-4 glass-card p-4 rounded-2xl border border-white/10">
+                            <div class="w-12 h-12 rounded-xl bg-brandBlue/20 text-brandBlue flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Class Location / Institute Address</h4>
+                                <p class="text-gray-300 text-sm mt-1">Class location: Kumawat Plaza, Robot Square, 16, Sundar Bagh Colony, Indore, Madhya Pradesh</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 glass-card p-4 rounded-2xl border border-white/10">
+                            <div class="w-12 h-12 rounded-xl bg-brandRed/20 text-brandRed flex items-center justify-center shrink-0">
+                                <i data-lucide="phone-call" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">Call Us</h4>
+                                <p class="text-gray-300 text-sm mt-1">+91 73898 32379 / +91 93436 80408</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 glass-card p-4 rounded-2xl border border-white/10">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="message-circle" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white">WhatsApp Enquiry</h4>
+                                <p class="text-gray-300 text-sm mt-1">Instant chat support available on +91 73898 32379</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Map Container precisely centered on Kumawat Plaza, Robot Square, Indore -->
+                <div class="glass-card p-6 rounded-3xl border border-white/15 space-y-6">
+                    <h3 class="text-xl font-bold text-white">Class Location: Kumawat Plaza, Robot Square</h3>
+                    <div class="w-full h-72 rounded-2xl overflow-hidden border border-white/10 relative">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.31723425126!2d75.8921!3d22.7530!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3963fed6c9a30001%3A0x8e8c8b6b23b12345!2sKumawat%20Plaza%2C%20Robot%20Square%2C%20Indore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="tel:7389832379" class="py-3 px-4 rounded-xl bg-brandBlue hover:bg-blue-600 text-white font-semibold text-center flex items-center justify-center space-x-2 shadow-lg shadow-brandBlue/30">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <span>Call Now</span>
+                        </a>
+                        <a href="https://wa.me/917389832379?text=Hello%20Chitransh%20Computer%20Institute,%20I%20would%20like%20to%20know%20more%20about%20admissions." target="_blank" class="py-3 px-4 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold text-center flex items-center justify-center space-x-2 shadow-lg shadow-green-600/30">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>WhatsApp Us</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-navy-900 border-t border-white/10 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-white/10 p-0.5 border border-blue-500/30 flex items-center justify-center overflow-hidden">
+                            <img src="WhatsApp Image 2026-09-29 at 7.08.36 PM.jpeg" alt="Logo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/100x100/1B1A55/FFFFFF?text=CCI'">
+                        </div>
+                        <span class="text-lg font-black text-white">CHITRANSH</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        "Learn • Practice • Build Projects • Get Certified"
+                    </p>
+                    <p class="text-xs text-gray-400">
+                        Kumawat Plaza, Robot Square, Indore, Madhya Pradesh
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#home" class="hover:text-brandBlue transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-brandBlue transition-colors">About Institute</a></li>
+                        <li><a href="#courses" class="hover:text-brandBlue transition-colors">Courses & Fees</a></li>
+                        <li><a href="#why-us" class="hover:text-brandBlue transition-colors">Why Choose Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">Top Programs</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#courses" onclick="openCourseModal('adca')" class="hover:text-brandBlue transition-colors">ADCA (Advanced Diploma)</a></li>
+                        <li><a href="#courses" onclick="openCourseModal('pgdca')" class="hover:text-brandBlue transition-colors">PGDCA Computer Diploma</a></li>
+                        <li><a href="#courses" onclick="openCourseModal('python')" class="hover:text-brandBlue transition-colors">Python Programming</a></li>
+                        <li><a href="#courses" onclick="openCourseModal('spoken-english')" class="hover:text-brandBlue transition-colors">Spoken English Training</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white mb-4">Admissions & Info</h4>
+                    <p class="text-xs text-gray-400 mb-2">Primary WhatsApp: +91 73898 32379</p>
+                    <p class="text-xs text-gray-400 mb-3">Alternate Contact: +91 93436 80408</p>
+                    <button onclick="openAdmissionModal()" class="w-full bg-brandBlue hover:bg-blue-600 text-white font-semibold text-xs py-2.5 rounded-xl shadow-md">
+                        Open Admission Form
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 Chitransh Computer Institute & Spoken English, Indore. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-brandBlue">Privacy Policy</a>
+                    <a href="#" class="hover:text-brandBlue">Terms of Service</a>
+                    <a href="#" class="hover:text-brandBlue">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/917389832379?text=Hello%20Chitransh%20Computer%20Institute,%20I%20would%20like%20to%20know%20more%20about%20admissions." target="_blank" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-green-600 hover:bg-green-500 text-white flex items-center justify-center shadow-2xl shadow-green-600/50 hover:scale-110 transition-all">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+    </a>
+
+    <div id="courseModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-card max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 border border-white/20 relative shadow-2xl space-y-6">
+            <button onclick="closeCourseModal()" class="absolute top-6 right-6 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-all">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="modalCourseContent" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <div id="admissionModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-card max-w-4xl w-full max-h-[92vh] overflow-y-auto rounded-3xl p-4 sm:p-8 border border-white/25 relative shadow-2xl space-y-4">
+            <button onclick="closeAdmissionModal()" class="absolute top-6 right-6 z-20 p-2.5 rounded-xl bg-navy-800/80 hover:bg-navy-700 text-white transition-all shadow-lg border border-white/20">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="space-y-2 mb-2 pr-12">
+                <span class="text-brandBlue font-bold tracking-widest uppercase text-xs">Official Admission Portal</span>
+                <h3 class="text-2xl font-black text-white">Chitransh Institute Admission Form</h3>
+                <p class="text-gray-300 text-sm">Please fill out the official Google Form below to register for your course at Kumawat Plaza, Robot Square, Indore.</p>
+            </div>
+
+            <!-- Embedded Google Form Iframe -->
+            <div class="w-full h-[650px] rounded-2xl overflow-hidden bg-white/5 border border-white/10 relative">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSerI9QaiSRptwzJAS9OjNwUmIVJ-AZOO31BiQGIxVbnH_gElw/viewform?embedded=true" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-between border-t border-white/10 gap-4 text-xs text-gray-300">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                    <span>Directly connected to Institute Google Sheet</span>
+                </div>
+                <div class="flex space-x-3">
+                    <a href="https://wa.me/917389832379?text=Hello%20Chitransh%20Computer%20Institute,%20I%20have%20opened%20the%20admission%20form.%20Please%20guide%20me." target="_blank" class="px-4 py-2 rounded-xl bg-green-600 text-white font-semibold flex items-center space-x-1.5">
+                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                        <span>WhatsApp Help</span>
+                    </a>
+                    <button onclick="closeAdmissionModal()" class="px-5 py-2 rounded-xl glass-card hover:bg-white/10 text-white font-semibold border border-white/20">
+                        Close Window
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Structured Course Data Repository
+        const coursesData = [
+            {
+                id: 'coa',
+                category: 'computer',
+                name: 'COA – Certificate in Office Automation',
+                shortDesc: 'Essential computer fundamentals, typing, and office productivity tools.',
+                duration: '6 Months',
+                fees: '₹3,500',
+                overview: 'Designed for beginners to master basic computer operations, MS Office, and fast typing skills required for office jobs.',
+                syllabus: ['Computer Fundamentals', 'OS (Windows)', 'MS Word, Excel, PowerPoint', 'Internet & Email', 'Hindi & English Typing Basics', 'Printing & Scanning'],
+                skills: ['Office Productivity', 'Document Formatting', 'Data Entry', 'Basic Troubleshooting'],
+                certificate: 'Government recognized institute certificate upon successful completion.',
+                career: 'Data Entry Operator, Office Assistant, Receptionist.'
+            },
+            {
+                id: 'dca',
+                category: 'computer',
+                name: 'DCA – Diploma in Computer Application',
+                shortDesc: 'Comprehensive diploma covering office automation, internet, and basic accounting.',
+                duration: '6 Months',
+                fees: '₹5,500',
+                overview: 'A standard professional diploma providing complete knowledge of computer applications, database management, and financial accounting.',
+                syllabus: ['PC Packages (Word, Excel, PPT)', 'Database Management (Access)', 'Tally Accounting Basics', 'Internet Applications', 'HTML & Web Basics', 'PC Maintenance'],
+                skills: ['Advanced Excel', 'Financial Accounting', 'Database Management', 'Office Automation'],
+                certificate: 'DCA Diploma Certificate with global verification ID.',
+                career: 'Accountant Assistant, Computer Operator, Back Office Executive.'
+            },
+            {
+                id: 'adca',
+                category: 'computer',
+                name: 'ADCA – Advanced Diploma in Computer Application',
+                shortDesc: 'Advanced diploma including programming, graphics, Tally with GST, and office tools.',
+                duration: '1 Year',
+                fees: '₹7,000',
+                overview: 'Our flagship 1-year diploma program designed to make students industry-ready with advanced programming, design, and accounting skills.',
+                syllabus: ['Advanced Office Tools', 'Tally Prime with GST', 'Desktop Publishing (Photoshop, CorelDRAW)', 'Programming Basics (C/C++)', 'HTML, CSS & Web Design', 'Project Work'],
+                skills: ['Full Accounting & GST', 'Graphic Design', 'Basic Coding', 'Office Management'],
+                certificate: 'ADCA Advanced Diploma Certificate.',
+                career: 'Office Manager, Accountant, Graphic Designer, IT Support.'
+            },
+            {
+                id: 'pgdca',
+                category: 'computer',
+                name: 'PGDCA – Post Graduate Diploma in Computer Application',
+                shortDesc: 'Post graduate professional computer diploma for graduates seeking IT careers.',
+                duration: '1 Year',
+                fees: '₹7,500',
+                overview: 'Advanced post-graduate level curriculum covering software engineering principles, database systems, advanced programming, and web technologies.',
+                syllabus: ['Programming in C & C++', 'Data Structures & Algorithms', 'Database Management Systems (SQL/MySQL)', 'Java Programming', 'Web Technologies', 'Software Engineering'],
+                skills: ['Software Development', 'Database Administration', 'Object Oriented Programming', 'Problem Solving'],
+                certificate: 'PGDCA Post Graduate Diploma.',
+                career: 'Software Developer, Programmer, IT Analyst, System Administrator.'
+            },
+            {
+                id: 'kids-basic',
+                category: 'computer',
+                name: 'Certificate in Kids Basic',
+                shortDesc: 'Fun and interactive computer learning for school children.',
+                duration: '3 Months',
+                fees: '₹2,500',
+                overview: 'Specially crafted course for young minds to learn computer basics, drawing tools, typing games, and digital literacy safely.',
+                syllabus: ['Introduction to Computers & Mouse Handling', 'Paint & Creative Drawing', 'Introduction to Typing', 'Educational Software & Games', 'Internet Safety & Basics'],
+                skills: ['Computer Literacy', 'Keyboard Skills', 'Creative Digital Art', 'Logical Thinking'],
+                certificate: 'Kids Computer Skill Certificate.',
+                career: 'School Foundation & Digital Confidence.'
+            },
+            {
+                id: 'python',
+                category: 'programming',
+                name: 'Python Programming',
+                shortDesc: 'Learn Python syntax, data structures, OOP, and database integration.',
+                duration: '3 Months',
+                fees: '₹5,000',
+                overview: 'Python is the world\'s most popular programming language. Master core Python, object-oriented principles, file handling, and MySQL connectivity.',
+                syllabus: ['Introduction, Python Syntax, Variables, Data Types', 'Operators, Strings, Lists, Tuples, Sets, Dictionaries', 'If-Else, Loops, Functions, Lambda, Arrays', 'OOP, File Handling, Exception Handling', 'Modules, MySQL Integration'],
+                skills: ['Python Coding', 'Algorithm Building', 'Backend Scripting', 'Database Connectivity'],
+                certificate: 'Python Programming Certificate.',
+                career: 'Python Developer, Data Analyst, Software Engineer.'
+            },
+            {
+                id: 'c-programming',
+                category: 'programming',
+                name: 'C Programming',
+                shortDesc: 'Master foundational programming, pointers, and memory management in C.',
+                duration: '3–4 Months',
+                fees: '₹3,500',
+                overview: 'The mother of all programming languages. Learn procedural programming, memory pointers, structures, and low-level logic.',
+                syllabus: ['Introduction, Syntax, Variables, Data Types', 'Operators, Input/Output, If Else, Switch', 'Loops, Functions, Arrays, Strings', 'Pointers, Structures, Memory Management', 'File Handling'],
+                skills: ['Logical Reasoning', 'Memory Management', 'Procedural Coding', 'Embedded Logic'],
+                certificate: 'C Programming Certificate.',
+                career: 'Embedded C Developer, Firmware Engineer, Software Trainee.'
+            },
+            {
+                id: 'cpp',
+                category: 'programming',
+                name: 'C++',
+                shortDesc: 'Object-oriented programming, classes, inheritance, and STL basics.',
+                duration: '3–4 Months',
+                fees: '₹4,000',
+                overview: 'Build robust applications with C++. Learn object-oriented programming, constructors, polymorphism, and Standard Template Library.',
+                syllabus: ['Introduction, Syntax, Variables, Data Types', 'Operators, Control Statements, Functions', 'Arrays, Strings, Classes & Objects', 'Constructors, Inheritance, Polymorphism', 'File Handling, STL Basics'],
+                skills: ['Object-Oriented Design', 'Game Logic Foundation', 'Advanced Coding', 'STL Usage'],
+                certificate: 'C++ Programming Certificate.',
+                career: 'C++ Developer, Game Developer, Application Engineer.'
+            },
+            {
+                id: 'java',
+                category: 'programming',
+                name: 'Java',
+                shortDesc: 'Core Java, OOP principles, exception handling, collections, and JDBC.',
+                duration: '3–4 Months',
+                fees: '₹5,000',
+                overview: 'Industry-standard enterprise programming language. Master core Java concepts, exception handling, collections framework, and database connectivity.',
+                syllabus: ['Introduction, Syntax, Variables, Data Types', 'Operators, Control Statements, Methods', 'Arrays, Strings, OOP, Packages', 'Exception Handling, Collections', 'File Handling, JDBC Basics'],
+                skills: ['Enterprise Software Development', 'Java Collections', 'Database Integration', 'Robust OOP'],
+                certificate: 'Java Developer Certificate.',
+                career: 'Java Developer, Android App Developer, Enterprise Software Engineer.'
+            },
+            {
+                id: 'javascript',
+                category: 'programming',
+                name: 'JavaScript',
+                shortDesc: 'Web interactivity, DOM manipulation, ES6 features, and asynchronous JS.',
+                duration: '2–3 Months',
+                fees: '₹4,000',
+                overview: 'Bring websites to life with JavaScript. Learn modern ES6 syntax, DOM manipulation, event handling, and asynchronous API calls.',
+                syllabus: ['Introduction, Syntax, Variables, Operators', 'Data Types, Functions, Objects, Arrays, Loops', 'DOM, Events, Forms, ES6 Features', 'JSON, Async JavaScript, Fetch API'],
+                skills: ['Frontend Interactivity', 'API Integration', 'Modern ES6+ Coding', 'Web Logic'],
+                certificate: 'JavaScript Developer Certificate.',
+                career: 'Frontend Developer, Web Developer, Full Stack Trainee.'
+            },
+            {
+                id: 'web-dev',
+                category: 'programming',
+                name: 'Web Development',
+                shortDesc: 'HTML, CSS, Bootstrap, responsive design, JavaScript, and live mini project.',
+                duration: '3–4 Months',
+                fees: '₹5,500',
+                overview: 'Become a professional web developer. Learn HTML5, CSS3, Bootstrap responsive grids, JavaScript, and build a live portfolio project.',
+                syllabus: ['HTML5 & Semantic Markup', 'CSS3 Styling & Flexbox/Grid', 'Bootstrap Framework', 'Responsive Mobile-First Design', 'JavaScript Interactivity', 'Live Mini Project'],
+                skills: ['Website Building', 'Responsive Design', 'UI/UX Implementation', 'Project Deployment'],
+                certificate: 'Web Development Professional Certificate.',
+                career: 'Web Designer, Frontend Developer, Freelance Web Developer.'
+            },
+            {
+                id: 'spoken-english',
+                category: 'spoken',
+                name: '6 Months Spoken English Course',
+                shortDesc: 'Comprehensive communication, fluency, grammar, and personality development.',
+                duration: '6 Months',
+                fees: '₹5,000',
+                overview: 'Overcome hesitation and speak English fluently. Our specialized program covers grammar, vocabulary, pronunciation, public speaking, and interview skills.',
+                syllabus: ['Grammar & Sentence Structure', 'Vocabulary Enhancement', 'Pronunciation & Accent Training', 'GD & Public Speaking Sessions', 'Interview Preparation & Body Language'],
+                skills: ['Fluent Conversation', 'Public Speaking', 'Professional Etiquette', 'Interview Confidence'],
+                certificate: 'Spoken English & Communication Diploma.',
+                career: 'Customer Support, Corporate Executive, Receptionist, Sales Professional.'
+            },
+            {
+                id: 'typing-english',
+                category: 'short',
+                name: 'English Typing',
+                shortDesc: 'Speed typing course with professional touch typing keyboard layout.',
+                duration: 'Per Month',
+                fees: '₹350 / month',
+                overview: 'Build 40+ WPM typing speed with high accuracy using professional touch typing software and drills.',
+                syllabus: ['Home Row Practice', 'Top & Bottom Row Drills', 'Number & Symbol Keying', 'Speed & Accuracy Tests'],
+                skills: ['Touch Typing', 'High WPM Speed', 'Error-Free Entry'],
+                certificate: 'Typing Speed Certificate upon passing test.',
+                career: 'Data Entry, Typist, Clerk.'
+            },
+            {
+                id: 'typing-hindi',
+                category: 'short',
+                name: 'Hindi Typing',
+                shortDesc: 'Mangal / Remington Gail / Kruti Dev Hindi typing training.',
+                duration: 'Per Month',
+                fees: '₹350 / month',
+                overview: 'Master Hindi typing layouts required for government exams, court typing, and clerical positions.',
+                syllabus: ['Hindi Keyboard Layouts', 'Mangal & Kruti Dev Fonts', 'Character Conjuncts', 'Speed Practice'],
+                skills: ['Hindi Typing Speed', 'Govt Exam Typing Prep'],
+                certificate: 'Hindi Typing Certificate.',
+                career: 'Govt Office Typist, Data Entry Clerk.'
+            },
+            {
+                id: 'adv-excel',
+                category: 'short',
+                name: 'Advanced Excel',
+                shortDesc: 'VLOOKUP, HLOOKUP, Pivot Tables, Macros, and Data Dashboards.',
+                duration: 'Short Course',
+                fees: '₹1,250',
+                overview: 'Master advanced spreadsheet tools used in corporate data analysis and accounting.',
+                syllabus: ['Advanced Formulas & Functions', 'VLOOKUP, HLOOKUP, XLOOKUP', 'Pivot Tables & Charts', 'Conditional Formatting & Data Validation', 'Basic Macros & Dashboards'],
+                skills: ['Data Analysis', 'Spreadsheet Automation', 'Dashboard Reporting'],
+                certificate: 'Advanced Excel Professional Certificate.',
+                career: 'Data Analyst, MIS Executive, Accountant.'
+            },
+            {
+                id: 'ms-word',
+                category: 'short',
+                name: 'MS Word',
+                shortDesc: 'Professional document formatting, mail merge, tables, and reports.',
+                duration: 'Short Course',
+                fees: '₹1,250',
+                overview: 'Master professional documentation, formatting, templates, and mail merge.',
+                syllabus: ['Document Creation & Formatting', 'Styles, Tables & Illustrations', 'Mail Merge for Bulk Letters', 'References & Table of Contents'],
+                skills: ['Professional Documentation', 'Report Generation'],
+                certificate: 'MS Word Certificate.',
+                career: 'Office Assistant, Content Formatter.'
+            },
+            {
+                id: 'ms-powerpoint',
+                category: 'short',
+                name: 'MS PowerPoint',
+                shortDesc: 'Professional presentation design, animations, and slideshow delivery.',
+                duration: 'Short Course',
+                fees: '₹1,250',
+                overview: 'Create stunning professional business and educational presentations.',
+                syllabus: ['Slide Layouts & Design Principles', 'Animations & Slide Transitions', 'Inserting Media & Charts', 'Presentation Delivery Tips'],
+                skills: ['Presentation Design', 'Visual Communication'],
+                certificate: 'MS PowerPoint Certificate.',
+                career: 'Business Presenter, Trainer, Corporate Executive.'
+            },
+            {
+                id: 'coreldraw',
+                category: 'short',
+                name: 'CorelDRAW',
+                shortDesc: 'Vector graphics, logo design, flex banner printing, and typography.',
+                duration: 'Short Course',
+                fees: '₹2,500',
+                overview: 'Learn vector illustration, logo designing, visiting cards, and flex banner layout creation.',
+                syllabus: ['Vector Tools & Shapes', 'Logo & Brand Identity Design', 'Flex Banner & Hoarding Layouts', 'Print Prepress & Color Separation'],
+                skills: ['Vector Illustration', 'Print Design', 'Logo Creation'],
+                certificate: 'CorelDRAW Design Certificate.',
+                career: 'Graphic Designer, Print Shop Operator, DTP Specialist.'
+            },
+            {
+                id: 'photoshop',
+                category: 'short',
+                name: 'Photoshop',
+                shortDesc: 'Photo editing, retouching, poster design, and digital art.',
+                duration: 'Short Course',
+                fees: '₹2,500',
+                overview: 'Master Adobe Photoshop for photo retouching, social media creatives, and digital posters.',
+                syllabus: ['Layers, Masks & Selection Tools', 'Photo Retouching & Color Correction', 'Poster & Social Media Creative Design', 'Digital Painting & Effects'],
+                skills: ['Photo Editing', 'Digital Art', 'Creative Design'],
+                certificate: 'Adobe Photoshop Certificate.',
+                career: 'Photo Editor, Creative Designer, Social Media Creator.'
+            },
+            {
+                id: 'tally-gst',
+                category: 'short',
+                name: 'Tally Prime with GST',
+                shortDesc: 'Accounting, inventory management, GST filing, and payroll in Tally Prime.',
+                duration: 'Short Course',
+                fees: '₹4,500',
+                overview: 'Industry-standard accounting course covering ledger creation, inventory, GST invoicing, and financial reports.',
+                syllabus: ['Introduction to Accounting & Tally Prime', 'Company Creation & Ledger Management', 'Inventory & Stock Vouchers', 'GST Configuration & E-Way Bills', 'Payroll & Financial Reports'],
+                skills: ['Computerized Accounting', 'GST Compliance', 'Inventory Control'],
+                certificate: 'Tally Prime Professional Certificate.',
+                career: 'Accounts Executive, Tally Operator, GST Accountant.'
+            }
+        ];
+
+        // Render Courses on Page Load
+        function renderCourses(filter = 'all') {
+            const grid = document.getElementById('coursesGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' ? coursesData : coursesData.filter(c => c.category === filter);
+
+            filtered.forEach(course => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-6 rounded-3xl card-3d border border-white/10 flex flex-col justify-between space-y-6';
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-2xl bg-brandBlue/20 text-brandBlue flex items-center justify-center font-bold">
+                                <i data-lucide="book-open" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20">${course.duration}</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">${course.name}</h3>
+                            <p class="text-gray-400 text-sm line-clamp-2">${course.shortDesc}</p>
+                        </div>
+                        <div class="pt-2 border-t border-white/10 flex items-center justify-between">
+                            <span class="text-lg font-black text-brandBlue">${course.fees}</span>
+                            <span class="text-xs text-gray-400 font-medium">100% Practical</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <button onclick="openCourseModal('${course.id}')" class="py-2.5 px-3 rounded-xl glass-card hover:bg-white/10 text-white font-semibold text-xs border border-white/20 transition-all text-center">
+                            View Details
+                        </button>
+                        <button onclick="openAdmissionModal()" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-brandBlue to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold text-xs shadow-md shadow-brandBlue/30 transition-all text-center">
+                            Apply Now
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Category Filter
+        function filterCourses(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.className = 'category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all bg-brandBlue text-white shadow-lg shadow-brandBlue/30';
+                } else {
+                    btn.className = 'category-btn px-6 py-2.5 rounded-xl font-semibold text-sm transition-all glass-card hover:bg-white/10 text-gray-300';
+                }
+            });
+            renderCourses(category);
+        }
+
+        // Course Modal Functionality
+        function openCourseModal(courseId) {
+            const course = coursesData.find(c => c.id === courseId);
+            if (!course) return;
+
+            const content = document.getElementById('modalCourseContent');
+            content.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brandBlue/20 text-brandBlue border border-brandBlue/30">${course.duration}</span>
+                        <span class="text-xl font-black text-brandBlue">${course.fees}</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">${course.name}</h2>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed">${course.overview}</p>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider text-blue-400">Complete Syllabus</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${course.syllabus.map(item => `<div class="bg-navy-800/60 p-2.5 rounded-xl border border-white/10 text-xs text-gray-200 flex items-center space-x-2"><span class="text-brandBlue font-bold">•</span><span>${item}</span></div>`).join('')}
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider text-blue-400">Skills Students Will Learn</h4>
+                    <div class="flex flex-wrap gap-2">
+                        ${course.skills.map(skill => `<span class="px-3 py-1 rounded-lg bg-blue-500/10 text-blue-300 text-xs border border-blue-500/20">${skill}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl border border-white/10 space-y-2">
+                    <h4 class="font-bold text-white text-sm">Certificate & Career Benefits</h4>
+                    <p class="text-gray-300 text-xs">${course.certificate}</p>
+                    <p class="text-blue-400 text-xs font-semibold">Job / Career Roles: ${course.career}</p>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end space-x-4">
+                    <button onclick="closeCourseModal()" class="px-6 py-3 rounded-xl glass-card text-white text-sm font-semibold border border-white/20">Close</button>
+                    <button onclick="closeCourseModal(); openAdmissionModal();" class="px-6 py-3 rounded-xl bg-gradient-to-r from-brandBlue to-blue-600 text-white text-sm font-bold shadow-lg shadow-brandBlue/30">Apply For This Course</button>
+                </div>
+            `;
+
+            document.getElementById('courseModal').classList.remove('hidden');
+            document.getElementById('courseModal').classList.add('flex');
+        }
+
+        function closeCourseModal() {
+            document.getElementById('courseModal').classList.remove('flex');
+            document.getElementById('courseModal').classList.add('hidden');
+        }
+
+        // Admission Modal Functionality
+        function openAdmissionModal() {
+            document.getElementById('admissionModal').classList.remove('hidden');
+            document.getElementById('admissionModal').classList.add('flex');
+        }
+
+        function closeAdmissionModal() {
+            document.getElementById('admissionModal').classList.remove('flex');
+            document.getElementById('admissionModal').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Three.js 3D Animated Canvas for Hero Section
+        function initHero3D() {
+            const container = document.getElementById('hero3dCanvasContainer');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 7;
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0x0052FF, 3, 50);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            const pointLight2 = new THREE.PointLight(0xFF3366, 2, 50);
+            pointLight2.position.set(-5, -5, 3);
+            scene.add(pointLight2);
+
+            // Floating 3D Group representing a modern learning station
+            const group = new THREE.Group();
+            scene.add(group);
+
+            // Laptop base plate
+            const baseGeo = new THREE.BoxGeometry(2.4, 0.1, 1.6);
+            const baseMat = new THREE.MeshStandardMaterial({ color: 0x1B1A55, roughness: 0.3, metalness: 0.8 });
+            const base = new THREE.Mesh(baseGeo, baseMat);
+            base.position.y = -0.8;
+            group.add(base);
+
+            // Laptop screen
+            const screenGeo = new THREE.BoxGeometry(2.4, 1.6, 0.08);
+            const screenMat = new THREE.MeshStandardMaterial({ color: 0x070F2B, roughness: 0.2, metalness: 0.9 });
+            const screen = new THREE.Mesh(screenGeo, screenMat);
+            screen.position.set(0, 0.1, -0.8);
+            screen.rotation.x = -0.2;
+            group.add(screen);
+
+            // Floating code cubes & spheres
+            const shapes = [];
+            for (let i = 0; i < 8; i++) {
+                const geom = i % 2 === 0 ? new THREE.BoxGeometry(0.3, 0.3, 0.3) : new THREE.SphereGeometry(0.2, 16, 16);
+                const mat = new THREE.MeshStandardMaterial({
+                    color: i % 2 === 0 ? 0x0052FF : 0xFF3366,
+                    roughness: 0.3,
+                    metalness: 0.5
+                });
+                const mesh = new THREE.Mesh(geom, mat);
+                mesh.position.set(
+                    (Math.random() - 0.5) * 4,
+                    (Math.random() - 0.5) * 3 + 0.5,
+                    (Math.random() - 0.5) * 2
+                );
+                group.add(mesh);
+                shapes.push(mesh);
+            }
+
+            // Mouse interactivity
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) - 0.5;
+                mouseY = (e.clientY / window.innerHeight) - 0.5;
+            });
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+                group.rotation.y += 0.005;
+                group.rotation.x += (mouseY * 0.5 - group.rotation.x) * 0.05;
+                group.rotation.y += (mouseX * 0.5 - group.rotation.y) * 0.05;
+
+                shapes.forEach((s, idx) => {
+                    s.rotation.x += 0.01;
+                    s.rotation.y += 0.015;
+                    s.position.y += Math.sin(Date.now() * 0.002 + idx) * 0.002;
+                });
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                if (!container) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+
+        // Window Onload Initialization
+        window.onload = function() {
+            renderCourses('all');
+            initHero3D();
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        };
+    </script>
+</body>
+</html>
